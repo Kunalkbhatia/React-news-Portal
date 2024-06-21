@@ -7,6 +7,8 @@ import Loader from "../Loader/Loader";
 import NewsCard from "../Cards/NewsCard";
 import Pagination from "../Pagination/pagination";
 import { usePagination } from "../../Hooks/usePagination";
+import toast from "react-hot-toast";
+import NotFound from "../Not Found/notFound";
 
 const Listing = () => {
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ const Listing = () => {
 
   const addFavouriteHandler = (article) => {
     dispatch(addToFavourites(article));
-    console.log(articleItems);
+    toast.success("Article Added to Favourites");
   };
   useEffect(() => {
     dispatch(getArticles(q, page, category));
@@ -30,7 +32,8 @@ const Listing = () => {
   ) : (
     <div className="bg-landingPrimary-0">
       <Filter />
-      <div className="grid md:grid-cols-3 md:p-14 md:gap-10  grid-col-1 p-1 gap-10">
+      {currentItems.length > 0 ? <>
+        <div className="grid md:grid-cols-3 md:p-14 md:gap-10  grid-col-1 p-1 gap-10">
         {currentItems.map((item, index) => {
           return (
             <NewsCard
@@ -50,6 +53,7 @@ const Listing = () => {
         paginate={paginate}
         lastPage ={Math.ceil(articleItems.length/articlesPerPage)}
       />
+      </> : <NotFound text={"No Results Found"}/>}
     </div>
   );
 };
