@@ -11,7 +11,7 @@ export const getArticles = (q, page, category) => async (dispatch) => {
   try {
     dispatch(getArticlesRequest());
     const { data } = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=us`,
+      `https://newsproxyserver-afr2.vercel.app/news`,
       {
         params: {
           q: q,
@@ -21,6 +21,7 @@ export const getArticles = (q, page, category) => async (dispatch) => {
         },
       }
     );
+    console.log(data);
     dispatch(getArticlesSuccess(data));
   } catch (error) {
     dispatch(getArticlesFailed(error.response.data.message));
