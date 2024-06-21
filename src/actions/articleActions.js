@@ -21,7 +21,7 @@ export const getArticles = (q, page, category) => async (dispatch) => {
         },
       }
     );
-    console.log(data);
+  
     dispatch(getArticlesSuccess(data));
   } catch (error) {
     dispatch(getArticlesFailed(error.response.data.message));

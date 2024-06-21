@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Favourites from "../components/ArticlesList/Favourites";
+
 
 const articleSlice = createSlice({
   name: "articles",
   initialState: {
     articleItems: [],
+    error : null
   },
 
   reducers: {

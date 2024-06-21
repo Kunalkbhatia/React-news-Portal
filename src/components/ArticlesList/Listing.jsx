@@ -9,11 +9,12 @@ import Pagination from "../Pagination/pagination";
 import { usePagination } from "../../Hooks/usePagination";
 import toast from "react-hot-toast";
 import NotFound from "../Not Found/notFound";
+import { getErrorClear } from "../../Slices/ArticleSlice";
 
 const Listing = () => {
   const dispatch = useDispatch();
   const { page, q, category } = useSelector((state) => state.params);
-  const { articleItems, loading } = useSelector((state) => state.articles);
+  const { articleItems, loading,error } = useSelector((state) => state.articles);
   const articlesPerPage = 9;
   const { currentPage, currentItems, paginate } = usePagination(articleItems,articlesPerPage);
 
@@ -24,8 +25,12 @@ const Listing = () => {
     toast.success("Article Added to Favourites");
   };
   useEffect(() => {
+    if(error){
+      toast.error(error);
+      dispatch(getErrorClear());
+    }
     dispatch(getArticles(q, page, category));
-  }, [dispatch, q, page, category]);
+  }, [dispatch, q, page, category,error]);
 
   return loading ? (
     <Loader />
